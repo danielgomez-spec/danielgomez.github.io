@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto — Daniel Gómez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0d16;
+      --card-bg: rgba(18, 23, 35, 0.6);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+      --text-muted: #94a3b8;
+      --accent-blue: #00f2fe;
+      --accent-purple: #7f00ff;
+      --font: 'Space Grotesk', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --nav-h: 70px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background-color: var(--bg); color: var(--text); min-height: 100vh; padding-top: var(--nav-h); }
+
+    /* NAV GLOBAL */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; background: rgba(10, 13, 22, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
+    .nav-logo span { color: var(--accent-blue); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent-blue); }
+
+    /* CONTENIDO */
+    .container { max-width: 900px; margin: 4rem auto; padding: 0 2rem; }
+    .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .page-subtitle { color: var(--text-muted); margin-bottom: 3rem; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; }
+    
+    /* ENLACES SOCIALES */
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .social-box { background: var(--card-bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: 16px; text-decoration: none; display: flex; align-items: center; gap: 1rem; transition: all 0.3s; }
+    .social-box:hover { border-color: var(--accent-blue); transform: translateX(5px); }
+    .social-icon { font-size: 1.5rem; }
+    .social-details h4 { color: #fff; font-size: 1rem; margin-bottom: 0.2rem; }
+    .social-details p { color: var(--text-muted); font-size: 0.85rem; font-family: var(--mono); }
+
+    /* FORMULARIO ESTÉTICO */
+    .contact-form { background: var(--card-bg); border: 1px solid var(--border); padding: 2rem; border-radius: 24px; backdrop-filter: blur(10px); }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .form-group input, .form-group textarea { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; color: #fff; font-family: var(--font); font-size: 0.95rem; }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-blue); }
+    
+    .btn-submit { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); border: none; color: #fff; width: 100%; padding: 0.9rem; border-radius: 50px; font-weight: 600; font-family: var(--font); cursor: pointer; transition: transform 0.3s; }
+    .btn-submit:hover { transform: translateY(-2px); }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; font-family: var(--mono); margin-top: 4rem; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } nav { padding: 0 1.5rem; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">DG<span>//</span>dev</a>
+    <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="sobre-mi.html">Sobre mí</a>
+      <a href="proyectos.html">Proyectos</a>
+      <a href="logros.html">Logros</a>
+      <a href="contacto.html" class="active">Contacto</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h2 class="page-title">Hablemos de Software</h2>
+    <p class="page-subtitle">¿Tienes alguna vacante abierta, un proyecto o alguna consulta técnica? Escríbeme.</p>
+    
+    <div class="contact-grid">
+      <!-- COLUMNA IZQUIERDA: REDES -->
+      <div class="contact-info">
+        <a href="mailto:tu-correo@email.com" class="social-box">
+          <div class="social-icon">✉️</div>
+          <div class="social-details">
+            <h4>Correo Electrónico</h4>
+            <p>daniel.gomez@ejemplo.com</p>
+          </div>
+        </a>
+        <a href="https://github.com/tu-usuario" target="_blank" class="social-box">
+          <div class="social-icon">🐙</div>
+          <div class="social-details">
+            <h4>GitHub Profile</h4>
+            <p>github.com/tu-usuario</p>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/tu-usuario" target="_blank" class="social-box">
+          <div class="social-icon">💼</div>
+          <div class="social-details">
+            <h4>LinkedIn</h4>
+            <p>linkedin.com/in/tu-usuario</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- COLUMNA DERECHA: FORM VISUAL -->
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('¡Mensaje enviado (Simulación)!');">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="correo@empresa.com" required />
+        </div>
+        <div class="form-group">
+          <label>Mensaje</label>
+          <textarea rows="4" placeholder="¿En qué puedo ayudarte?" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Enviar Mensaje ➔</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Daniel Gómez | Ingeniería de Software</p>
+  </footer>
+
+</body>
+</html>
