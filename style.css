@@ -15,34 +15,39 @@
 :root {
   /* Colores de fondo */
   --bg: #ffffff;              /* Fondo principal (blanco) */
-  --bg-soft: #f7f9fc;         /* Fondo de secciones alternas (gris muy claro) */
+  --bg-soft: #f4fbfb;         /* Fondo de secciones alternas (gris-menta muy claro) */
   --bg-card: #ffffff;         /* Fondo de tarjetas */
 
-  /* Colores de marca */
-  --navy: #0a2540;            /* Azul marino oscuro — texto principal / nav */
-  --blue: #1e6fd9;            /* Azul brillante — acento principal, links, botones */
-  --blue-light: #eaf2fd;      /* Azul muy claro — fondos suaves de hover */
-  --gold: #c9a449;            /* Dorado — acento premium, detalles, líneas */
-  --gold-light: #f7efdc;      /* Dorado muy claro — fondos suaves */
+  /* ── PALETA DE MARCA (actualizada) ──────────────────────────
+     Basada en el logo: cian eléctrico → turquesa → menta, con
+     azul marino apagado como color "ancla" para texto oscuro,
+     footer y nav. Si quieres volver a cambiar la paleta más
+     adelante, solo necesitas tocar estos 4 valores hexadecimales. */
+  --navy: #2f455c;            /* Azul marino apagado — texto principal / nav / footer */
+  --blue: #1dcdfe;            /* Cian eléctrico — acento principal, links, botones */
+  --blue-light: #e3f9ff;      /* Cian muy claro — fondos suaves de hover */
+  --gold: #21d0b2;            /* Turquesa — segundo acento, antes "dorado" */
+  --gold-light: #e3fbf5;      /* Turquesa muy claro — fondos suaves */
+  --mint: #34f5c5;            /* Menta — tercer acento, usado en detalles y fondo animado */
 
   /* Colores de texto */
-  --text: #1a1f2e;            /* Texto principal (casi negro) */
-  --text-muted: #5b6577;      /* Texto secundario (gris) */
-  --text-light: #94a0b3;      /* Texto terciario (gris claro) */
+  --text: #1c2b38;            /* Texto principal (azul-negro suave, mismo aire que --navy) */
+  --text-muted: #5c7080;      /* Texto secundario (gris azulado) */
+  --text-light: #94a8b5;      /* Texto terciario (gris azulado claro) */
 
   /* Bordes y sombras */
-  --border: #e6eaf0;          /* Borde sutil para tarjetas */
-  --shadow: 0 4px 24px rgba(10, 37, 64, 0.06);
-  --shadow-hover: 0 12px 40px rgba(10, 37, 64, 0.12);
+  --border: #e1eef0;          /* Borde sutil para tarjetas */
+  --shadow: 0 4px 24px rgba(47, 69, 92, 0.07);
+  --shadow-hover: 0 12px 40px rgba(33, 208, 178, 0.16);
 
-  /* Colores SOLO para el fondo animado (más saturados que los de marca,
-     porque se usan en manchas grandes y difuminadas, no en texto).
+  /* Colores SOLO para el fondo animado (mismos tonos de marca,
+     pero se usan en manchas grandes y difuminadas, no en texto).
      Si quieres que el fondo se vea más o menos intenso, ajusta el
      valor "alpha" (el número después de la coma final en rgba) en
      la sección "FONDO ANIMADO" más abajo, no estos hex. */
-  --bg-fx-blue: #2f7ff0;
-  --bg-fx-gold: #d8ad4d;
-  --bg-fx-violet: #6c5ce7;
+  --bg-fx-blue: #1dcdfe;
+  --bg-fx-gold: #21d0b2;
+  --bg-fx-violet: #34f5c5;
 
   /* Tipografía: Plus Jakarta Sans = títulos (look moderno tipo Wix) 
      Inter = cuerpo de texto (alta legibilidad) */
@@ -88,18 +93,23 @@ a { color: inherit; }
   inset: 0;
   z-index: -2;
   pointer-events: none;
+  /* Manchas más grandes (ellipse %) y más opacas (alpha) que la versión
+     anterior, para que se note claramente sobre el fondo blanco sin
+     tapar el texto (las secciones con tarjetas usan --bg-card sólido
+     encima, así que la legibilidad no se ve afectada). */
   background:
-    radial-gradient(ellipse 55% 45% at 12% 18%, rgba(47,127,240,0.16) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 45% at 88% 15%, rgba(216,173,77,0.18) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 45% at 85% 85%, rgba(108,92,231,0.14) 0%, transparent 70%),
-    radial-gradient(ellipse 45% 40% at 10% 90%, rgba(47,127,240,0.12) 0%, transparent 70%);
-  background-size: 180% 180%;
-  animation: ambientMove 18s ease-in-out infinite alternate;
+    radial-gradient(ellipse 65% 55% at 10% 15%, rgba(29,205,254,0.22) 0%, transparent 72%),
+    radial-gradient(ellipse 60% 55% at 90% 10%, rgba(52,245,197,0.24) 0%, transparent 72%),
+    radial-gradient(ellipse 60% 55% at 88% 88%, rgba(33,208,178,0.20) 0%, transparent 72%),
+    radial-gradient(ellipse 55% 50% at 8% 92%, rgba(29,205,254,0.18) 0%, transparent 72%),
+    radial-gradient(ellipse 40% 35% at 50% 50%, rgba(52,245,197,0.10) 0%, transparent 70%);
+  background-size: 200% 200%;
+  animation: ambientMove 14s ease-in-out infinite alternate;
 }
 @keyframes ambientMove {
-  0%   { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%; }
-  50%  { background-position: 30% 40%, 70% 30%, 70% 70%, 30% 60%; }
-  100% { background-position: 60% 10%, 40% 60%, 50% 40%, 60% 90%; }
+  0%   { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 50%; }
+  50%  { background-position: 35% 45%, 65% 25%, 65% 75%, 25% 65%, 40% 60%; }
+  100% { background-position: 65% 5%, 35% 65%, 45% 35%, 65% 95%, 60% 40%; }
 }
 
 /* Canvas de partículas: ocupa toda la pantalla, fijo, detrás del
@@ -164,7 +174,7 @@ nav {
 
 /* Botón CTA opcional en el nav (ej: "Contáctame") */
 .nav-cta {
-  background: linear-gradient(135deg, var(--blue), #1557ad);
+  background: linear-gradient(135deg, var(--blue), var(--gold));
   color: #fff !important;
   padding: 0.6rem 1.4rem;
   border-radius: 50px;
@@ -172,7 +182,7 @@ nav {
   font-weight: 700 !important;
 }
 .nav-cta::after { display: none; } /* No queremos la línea inferior en el botón */
-.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(30,111,217,0.3); }
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(29,205,254,0.35); }
 
 /* Menú hamburguesa para móvil (oculto en desktop) */
 .nav-toggle { display: none; }
@@ -231,33 +241,33 @@ nav {
 .card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-hover);
-  border-color: rgba(30,111,217,0.25);
+  border-color: rgba(29,205,254,0.3);
 }
 
 /* ── 8. BOTONES ────────────────────────────────────────────── */
 .btn-primary {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  background: linear-gradient(135deg, var(--blue), #1557ad);
+  background: linear-gradient(135deg, var(--blue), var(--gold));
   color: #fff; text-decoration: none;
   padding: 1rem 2.2rem; border-radius: 50px;
   font-weight: 700; font-size: 0.95rem;
-  box-shadow: 0 6px 20px rgba(30,111,217,0.25);
+  box-shadow: 0 6px 20px rgba(29,205,254,0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: none; cursor: pointer; font-family: var(--font-body);
 }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(30,111,217,0.35); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(29,205,254,0.4); }
 
 .btn-gold {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  background: linear-gradient(135deg, var(--gold), #b08f3a);
+  background: linear-gradient(135deg, var(--gold), var(--mint));
   color: #fff; text-decoration: none;
   padding: 1rem 2.2rem; border-radius: 50px;
   font-weight: 700; font-size: 0.95rem;
-  box-shadow: 0 6px 20px rgba(201,164,73,0.3);
+  box-shadow: 0 6px 20px rgba(33,208,178,0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: none; cursor: pointer; font-family: var(--font-body);
 }
-.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(201,164,73,0.4); }
+.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(33,208,178,0.4); }
 
 .btn-outline {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -316,7 +326,7 @@ footer {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  background: linear-gradient(120deg, var(--navy) 0%, var(--blue) 55%, var(--gold) 100%);
+  background: linear-gradient(120deg, var(--navy) 0%, var(--blue) 45%, var(--gold) 75%, var(--mint) 100%);
   transform: translateY(0);
   display: flex; align-items: center; justify-content: center;
 }

@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
      Parámetros que puedes ajustar:
      - NUM_PARTICLES: cuántos puntos hay (más = más denso)
      - MAX_DIST: distancia máxima para dibujar una línea entre dos puntos
-     - color del punto/línea: busca "rgba(47,127,240" más abajo */
+     - color del punto/línea: busca "rgba(29,205,254" más abajo */
   const canvas = document.getElementById('bg-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
     let width, height, particles = [];
-    const NUM_PARTICLES = 55;
+    const NUM_PARTICLES = 70;
     const MAX_DIST = 130;
     const mouse = { x: -9999, y: -9999 };
 
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(47,127,240,0.35)'; // azul de marca, semitransparente
+        ctx.fillStyle = 'rgba(29,205,254,0.45)'; // cian de marca, semitransparente
         ctx.fill();
       });
 
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(216,173,77,${(1 - dist / MAX_DIST) * 0.18})`; // dorado, se desvanece con la distancia
+            ctx.strokeStyle = `rgba(52,245,197,${(1 - dist / MAX_DIST) * 0.28})`; // menta, se desvanece con la distancia
             ctx.lineWidth = 0.7;
             ctx.stroke();
           }
