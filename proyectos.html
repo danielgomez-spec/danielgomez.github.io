@@ -4,164 +4,223 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Proyectos — Daniel Gómez</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ====================================================
+       ESTILOS PROPIOS DE ESTA PÁGINA (proyectos.html)
+       ==================================================== -->
   <style>
-    :root {
-      --bg: #0a0d16;
-      --card-bg: rgba(18, 23, 35, 0.6);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #ffffff;
-      --text-muted: #94a3b8;
-      --accent-blue: #00f2fe;
-      --accent-purple: #7f00ff;
-      --font: 'Space Grotesk', sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-      --nav-h: 70px;
+    .page-header { padding: 4rem 0 1rem; }
+
+    /* Botones de filtro */
+    .filter-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 3rem; }
+    .filter-btn {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.6rem 1.5rem; border-radius: 50px;
+      font-family: var(--font-body); font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; transition: all 0.25s ease;
+    }
+    .filter-btn:hover { border-color: var(--blue); color: var(--navy); }
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--blue), #1557ad);
+      border-color: transparent; color: #fff;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background-color: var(--bg); color: var(--text); min-height: 100vh; padding-top: var(--nav-h); }
+    /* Grid de proyectos */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2rem;
+    }
+    .project-card { padding: 2.25rem; transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.3s ease; }
 
-    /* NAV GLOBAL */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; background: rgba(10, 13, 22, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .nav-logo span { color: var(--accent-blue); }
-    .nav-links { display: flex; gap: 1.5rem; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent-blue); }
+    .project-num {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--gold); letter-spacing: 2px; margin-bottom: 1.25rem;
+    }
+    .status-badge {
+      display: inline-block; font-family: var(--font-mono); font-size: 0.72rem;
+      padding: 0.25rem 0.75rem; border-radius: 50px; font-weight: 600; margin-bottom: 1.25rem;
+    }
+    .status-done { background: #e7f7ee; color: #1a9b5c; }
+    .status-progress { background: #fdf2e3; color: #c9821b; }
 
-    /* CONTENIDO */
-    .container { max-width: 1200px; margin: 4rem auto; padding: 0 2rem; }
-    .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .page-subtitle { color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem; }
+    .project-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--navy); margin-bottom: 0.85rem; }
+    .project-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.5rem; }
 
-    /* FILTROS INTERACTIVOS */
-    .filter-container { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
-    .filter-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-muted); padding: 0.6rem 1.5rem; border-radius: 50px; cursor: pointer; font-family: var(--mono); font-size: 0.85rem; transition: all 0.3s; }
-    .filter-btn:hover, .filter-btn.active { border-color: var(--accent-blue); color: #fff; background: rgba(0, 242, 254, 0.05); }
+    .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.75rem; }
+    .tech-pill {
+      font-family: var(--font-mono); font-size: 0.74rem;
+      background: var(--blue-light); color: var(--blue);
+      padding: 0.25rem 0.75rem; border-radius: 50px;
+    }
+    .card-link {
+      color: var(--navy); text-decoration: none; font-weight: 700; font-size: 0.9rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: gap 0.3s ease, color 0.3s ease;
+    }
+    .card-link:hover { gap: 0.85rem; color: var(--blue); }
 
-    /* PROYECTOS GRID */
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
-    .project-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; backdrop-filter: blur(10px); }
-    .project-card:hover { border-color: var(--accent-purple); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(127, 0, 255, 0.1); }
-    
-    .card-top { margin-bottom: 2rem; }
-    .project-status { display: inline-block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 50px; margin-bottom: 1rem; font-weight: 600; }
-    .status-done { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
-    .status-progress { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); }
-    
-    .project-card h3 { font-size: 1.4rem; color: #fff; margin-bottom: 0.75rem; }
-    .project-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
-    
-    .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tech-tag { font-family: var(--mono); font-size: 0.8rem; background: rgba(255,255,255,0.05); padding: 0.2rem 0.6rem; border-radius: 4px; color: #abc; }
-    
-    .project-link { text-decoration: none; color: var(--accent-blue); font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; transition: opacity 0.3s; }
-    .project-link:hover { opacity: 0.8; }
-
-    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; font-family: var(--mono); margin-top: 4rem; }
-    @media (max-width: 768px) { .projects-grid { grid-template-columns: 1fr; } nav { padding: 0 1.5rem; } }
+    /* Estado oculto para el filtrado por JS */
+    .project-card.hidden { display: none; }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a class="nav-logo" href="index.html">DG<span>//</span>dev</a>
-    <div class="nav-links">
-      <a href="index.html">Inicio</a>
-      <a href="sobre-mi.html">Sobre mí</a>
-      <a href="proyectos.html" class="active">Proyectos</a>
-      <a href="logros.html">Logros</a>
-      <a href="contacto.html">Contacto</a>
+<div class="ambient-bg"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html">Daniel<span>Gómez</span></a>
+  <button class="nav-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-mi.html">Sobre mí</a>
+    <a href="proyectos.html" class="active">Proyectos</a>
+    <a href="logros.html">Logros</a>
+    <a href="contacto.html" class="nav-cta">Contáctame</a>
+  </div>
+</nav>
+
+<section class="page-section page-header">
+  <div class="container">
+    <div class="section-label">Portfolio</div>
+    <h1 class="section-title reveal">Proyectos <span class="accent">Destacados</span></h1>
+    <p class="section-subtitle reveal">Explora mi ecosistema de software, desde sistemas web completos hasta motores lógicos en Prolog.</p>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="container">
+
+    <!-- FILTROS: el atributo data-filter define la categoría.
+         "all" siempre muestra todo. El JS de abajo lee este
+         atributo y compara con data-category de cada tarjeta. -->
+    <div class="filter-row reveal">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="web">Sistemas Web</button>
+      <button class="filter-btn" data-filter="logica">Lógica / Compiladores</button>
+      <button class="filter-btn" data-filter="prolog">Prolog</button>
     </div>
-  </nav>
 
-  <main class="container">
-    <h2 class="page-title">Proyectos Destacados</h2>
-    <p class="page-subtitle">Explora mi ecosistema de software y desarrollos interactivos.</p>
-
-    <!-- FILTROS -->
-    <div class="filter-container">
-      <button class="filter-btn active" onclick="filterProjects('all')">Todos</button>
-      <button class="filter-btn" onclick="filterProjects('sistemas')">Sistemas / Lógica</button>
-      <button class="filter-btn" onclick="filterProjects('juegos')">Videojuegos / Web</button>
-    </div>
-
-    <!-- CONTENEDOR DE TARJETAS -->
     <div class="projects-grid">
-      
-      <!-- PROYECTO 1: ANALIZADOR SINTÁCTICO -->
-      <div class="project-card" data-category="sistemas">
-        <div class="card-top">
-          <span class="project-status status-done">Completado</span>
-          <h3>Analizador Sintáctico</h3>
-          <p>Herramienta lógica robusta diseñada para procesar secuencias de tokens, verificar reglas gramaticales específicas y estructurar árboles jerárquicos sintácticos eficientemente.</p>
-          <div class="project-tech">
-            <span class="tech-tag">Java</span>
-            <span class="tech-tag">Compiladores</span>
-            <span class="tech-tag">Gramáticas</span>
-          </div>
+
+      <div class="card project-card reveal" data-category="web">
+        <div class="project-num">01 — SISTEMAS WEB</div>
+        <span class="status-badge status-done">✓ Completado</span>
+        <h3>Sistema EjemploSeg</h3>
+        <p>Aplicación web completa en Laravel con autenticación vía Breeze, relaciones muchos a muchos entre Personas e Intereses, protección de rutas con middleware auth y panel de control con estadísticas en tiempo real.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">Laravel</span>
+          <span class="tech-pill">PHP</span>
+          <span class="tech-pill">MySQL</span>
+          <span class="tech-pill">Tailwind</span>
         </div>
-        <a href="https://github.com/tu-usuario/analizador" target="_blank" class="project-link">Ver Código Fuente ➔</a>
+        <a href="https://github.com/danielgomez-spec/Lenguajes-de-Programcion-laravel-Taller2" target="_blank" class="card-link">Ver Repositorio →</a>
       </div>
 
-      <!-- PROYECTO 2: INTÉRPRETE DE CÓDIGO -->
-      <div class="project-card" data-category="sistemas">
-        <div class="card-top">
-          <span class="project-status status-progress">En Desarrollo</span>
-          <h3>Intérprete de Código</h3>
-          <p>Motor de ejecución a medida diseñado para leer y procesar scripts personalizados mediante una arquitectura modular de AST y evaluación en tiempo de ejecución.</p>
-          <div class="project-tech">
-            <span class="tech-tag">C++</span>
-            <span class="tech-tag">AST</span>
-            <span class="tech-tag">Lógica Estructurada</span>
-          </div>
+      <div class="card project-card reveal" data-category="logica">
+        <div class="project-num">02 — COMPILADORES</div>
+        <span class="status-badge status-done">✓ Completado</span>
+        <h3>Analizador Sintáctico</h3>
+        <p>Herramienta que procesa secuencias de tokens, verifica reglas gramaticales y construye árboles jerárquicos sintácticos. Implementado con patrones de diseño para compiladores.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">Java</span>
+          <span class="tech-pill">Compiladores</span>
+          <span class="tech-pill">AST</span>
         </div>
-        <a href="https://github.com/tu-usuario/interprete" target="_blank" class="project-link">Ver Código Fuente ➔</a>
+        <a href="https://github.com/danielgomez-spec" target="_blank" class="card-link">Ver Código Fuente →</a>
       </div>
 
-      <!-- PROYECTO 3: TU NUEVO JUEGO INTERACTIVO -->
-      <div class="project-card" data-category="juegos">
-        <div class="card-top">
-          <span class="project-status status-done">Completado</span>
-          <h3>Interactive Web Game</h3>
-          <p>Videojuego desarrollado con lógica nativa de estados web. Control de colisiones, mecánicas fluidas e interfaz inmersiva integrada directamente en el navegador.</p>
-          <div class="project-tech">
-            <span class="tech-tag">JavaScript ES6</span>
-            <span class="tech-tag">HTML5 Canvas</span>
-            <span class="tech-tag">CSS Animaciones</span>
-          </div>
+      <div class="card project-card reveal" data-category="logica">
+        <div class="project-num">03 — SISTEMAS</div>
+        <span class="status-badge status-progress">⚡ En Desarrollo</span>
+        <h3>Intérprete de Código</h3>
+        <p>Motor de ejecución que lee y procesa scripts personalizados mediante arquitectura modular de AST y evaluación en tiempo de ejecución. Soporte para múltiples tipos de datos.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">C++</span>
+          <span class="tech-pill">AST</span>
+          <span class="tech-pill">Lógica Estructurada</span>
         </div>
-        <a href="https://github.com/tu-usuario/nombre-del-juego" target="_blank" class="project-link">Jugar / Ver Código ➔</a>
+        <a href="https://github.com/danielgomez-spec" target="_blank" class="card-link">Ver Progreso →</a>
+      </div>
+
+      <div class="card project-card reveal" data-category="prolog">
+        <div class="project-num">04 — PROLOG</div>
+        <span class="status-badge status-done">✓ Completado</span>
+        <h3>Motor NLP & Listas Recursivas</h3>
+        <p>Sistema experto interactivo que procesa inventarios, calcula estadísticas con recursión y genera texto conjugado mediante backtracking en Prolog.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">Prolog</span>
+          <span class="tech-pill">SWI-Prolog</span>
+          <span class="tech-pill">Backtracking</span>
+        </div>
+        <a href="https://github.com/danielgomez-spec/taller4-prolog" target="_blank" class="card-link">Ver Repositorio →</a>
+      </div>
+
+      <div class="card project-card reveal" data-category="web">
+        <div class="project-num">05 — WEB</div>
+        <span class="status-badge status-done">✓ Completado</span>
+        <h3>Interactive Web Game</h3>
+        <p>Videojuego con lógica nativa de estados web. Control de colisiones, mecánicas fluidas e interfaz inmersiva integrada directamente en el navegador sin dependencias externas.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">JavaScript ES6</span>
+          <span class="tech-pill">HTML5 Canvas</span>
+        </div>
+        <a href="https://github.com/danielgomez-spec" target="_blank" class="card-link">Jugar / Ver Código →</a>
+      </div>
+
+      <div class="card project-card reveal" data-category="prolog">
+        <div class="project-num">06 — LÓGICO</div>
+        <span class="status-badge status-done">✓ Completado</span>
+        <h3>Reglas de Inferencia Prolog</h3>
+        <p>Modelado de condiciones lógicas y toma de decisiones mediante motores declarativos. Incluye base de conocimiento con hechos, reglas complejas y consultas avanzadas.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">Prolog</span>
+          <span class="tech-pill">Inferencia</span>
+        </div>
+        <a href="https://github.com/danielgomez-spec/taller3-prolog" target="_blank" class="card-link">Ver Repositorio →</a>
       </div>
 
     </div>
-  </main>
+  </div>
+</section>
 
-  <footer>
-    <p>© 2026 Daniel Gómez | Ingeniería de Software</p>
-  </footer>
+<footer>
+  <span class="footer-logo">Daniel<span>Gómez</span></span>
+  <span>© 2026 Daniel Sebastián Gómez · Ingeniería de Software</span>
+  <span>Quito, Ecuador</span>
+</footer>
 
-  <!-- SCRIPT DINÁMICO DE FILTRADO -->
-  <script>
-    function filterProjects(category) {
-      // Manejar estados activos de los botones
-      const buttons = document.querySelectorAll('.filter-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+<script src="script.js"></script>
 
-      // Filtrar Tarjetas
-      const cards = document.querySelectorAll('.project-card');
-      cards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+<!-- ====================================================
+     SCRIPT PROPIO: lógica de filtrado de proyectos.
+     Al hacer clic en un botón de filtro:
+     1) Quita "active" de todos los botones y lo pone en el clicado
+     2) Recorre las tarjetas y oculta las que no coincidan
+        con la categoría seleccionada (o muestra todo si es "all")
+     ==================================================== -->
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      projectCards.forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.classList.toggle('hidden', !match);
       });
-    }
-  </script>
+    });
+  });
+</script>
+
 </body>
 </html>

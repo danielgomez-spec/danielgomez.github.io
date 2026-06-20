@@ -4,111 +4,120 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contacto — Daniel Gómez</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ====================================================
+       ESTILOS PROPIOS DE ESTA PÁGINA (contacto.html)
+       ==================================================== -->
   <style>
-    :root {
-      --bg: #0a0d16;
-      --card-bg: rgba(18, 23, 35, 0.6);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #ffffff;
-      --text-muted: #94a3b8;
-      --accent-blue: #00f2fe;
-      --accent-purple: #7f00ff;
-      --font: 'Space Grotesk', sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-      --nav-h: 70px;
+    .page-header { padding: 4rem 0 1rem; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 3rem; }
+
+    /* Tarjetas de enlaces sociales */
+    .contact-links { display: flex; flex-direction: column; gap: 1.1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.5rem; text-decoration: none;
     }
+    .contact-link:hover { transform: translateX(6px); }
+    .contact-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--blue-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+    }
+    .contact-link h4 { color: var(--navy); font-size: 0.96rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .contact-link p { color: var(--text-light); font-size: 0.84rem; font-family: var(--font-mono); }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background-color: var(--bg); color: var(--text); min-height: 100vh; padding-top: var(--nav-h); }
+    /* Formulario */
+    .contact-form { padding: 2.5rem; }
+    .form-group { margin-bottom: 1.4rem; }
+    .form-group label {
+      display: block; font-family: var(--font-mono); font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--blue); margin-bottom: 0.6rem; font-weight: 500;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.9rem 1.1rem;
+      color: var(--text); font-family: var(--font-body); font-size: 0.95rem;
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--blue); background: #fff;
+      box-shadow: 0 0 0 3px var(--blue-light);
+    }
+    .form-group textarea { resize: vertical; min-height: 130px; }
 
-    /* NAV GLOBAL */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; background: rgba(10, 13, 22, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .nav-logo span { color: var(--accent-blue); }
-    .nav-links { display: flex; gap: 1.5rem; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent-blue); }
+    /* Pequeño aviso de confirmación, oculto por defecto */
+    .form-success {
+      display: none;
+      background: #e7f7ee; color: #1a9b5c;
+      padding: 0.9rem 1.1rem; border-radius: 10px;
+      font-size: 0.88rem; margin-top: 1rem; font-weight: 600;
+    }
+    .form-success.show { display: block; }
 
-    /* CONTENIDO */
-    .container { max-width: 900px; margin: 4rem auto; padding: 0 2rem; }
-    .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .page-subtitle { color: var(--text-muted); margin-bottom: 3rem; }
-
-    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; }
-    
-    /* ENLACES SOCIALES */
-    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
-    .social-box { background: var(--card-bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: 16px; text-decoration: none; display: flex; align-items: center; gap: 1rem; transition: all 0.3s; }
-    .social-box:hover { border-color: var(--accent-blue); transform: translateX(5px); }
-    .social-icon { font-size: 1.5rem; }
-    .social-details h4 { color: #fff; font-size: 1rem; margin-bottom: 0.2rem; }
-    .social-details p { color: var(--text-muted); font-size: 0.85rem; font-family: var(--mono); }
-
-    /* FORMULARIO ESTÉTICO */
-    .contact-form { background: var(--card-bg); border: 1px solid var(--border); padding: 2rem; border-radius: 24px; backdrop-filter: blur(10px); }
-    .form-group { margin-bottom: 1.25rem; }
-    .form-group label { display: block; font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
-    .form-group input, .form-group textarea { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; color: #fff; font-family: var(--font); font-size: 0.95rem; }
-    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-blue); }
-    
-    .btn-submit { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); border: none; color: #fff; width: 100%; padding: 0.9rem; border-radius: 50px; font-weight: 600; font-family: var(--font); cursor: pointer; transition: transform 0.3s; }
-    .btn-submit:hover { transform: translateY(-2px); }
-
-    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; font-family: var(--mono); margin-top: 4rem; }
-    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } nav { padding: 0 1.5rem; } }
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a class="nav-logo" href="index.html">DG<span>//</span>dev</a>
-    <div class="nav-links">
-      <a href="index.html">Inicio</a>
-      <a href="sobre-mi.html">Sobre mí</a>
-      <a href="proyectos.html">Proyectos</a>
-      <a href="logros.html">Logros</a>
-      <a href="contacto.html" class="active">Contacto</a>
-    </div>
-  </nav>
+<div class="ambient-bg"></div>
 
-  <main class="container">
-    <h2 class="page-title">Hablemos de Software</h2>
-    <p class="page-subtitle">¿Tienes alguna vacante abierta, un proyecto o alguna consulta técnica? Escríbeme.</p>
-    
+<nav>
+  <a class="nav-logo" href="index.html">Daniel<span>Gómez</span></a>
+  <button class="nav-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-mi.html">Sobre mí</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="logros.html">Logros</a>
+    <a href="contacto.html" class="active nav-cta">Contáctame</a>
+  </div>
+</nav>
+
+<section class="page-section page-header">
+  <div class="container">
+    <div class="section-label">Contacto</div>
+    <h1 class="section-title reveal">Hablemos de <span class="accent">Software</span></h1>
+    <p class="section-subtitle reveal">¿Tienes alguna vacante abierta, un proyecto o alguna consulta técnica? Escríbeme.</p>
+  </div>
+</section>
+
+<section class="page-section" style="padding-top: 0;">
+  <div class="container">
     <div class="contact-grid">
-      <!-- COLUMNA IZQUIERDA: REDES -->
-      <div class="contact-info">
-        <a href="mailto:tu-correo@email.com" class="social-box">
-          <div class="social-icon">✉️</div>
-          <div class="social-details">
-            <h4>Correo Electrónico</h4>
-            <p>daniel.gomez@ejemplo.com</p>
-          </div>
+
+      <!-- COLUMNA IZQUIERDA: redes y contacto directo -->
+      <div class="contact-links reveal">
+        <a href="mailto:daniel.gomez@ejemplo.com" class="card contact-link">
+          <div class="contact-icon">✉️</div>
+          <div><h4>Correo Electrónico</h4><p>daniel.gomez@ejemplo.com</p></div>
         </a>
-        <a href="https://github.com/tu-usuario" target="_blank" class="social-box">
-          <div class="social-icon">🐙</div>
-          <div class="social-details">
-            <h4>GitHub Profile</h4>
-            <p>github.com/tu-usuario</p>
-          </div>
+        <a href="https://github.com/danielgomez-spec" target="_blank" class="card contact-link">
+          <div class="contact-icon">🐙</div>
+          <div><h4>GitHub</h4><p>github.com/danielgomez-spec</p></div>
         </a>
-        <a href="https://linkedin.com/in/tu-usuario" target="_blank" class="social-box">
-          <div class="social-icon">💼</div>
-          <div class="social-details">
-            <h4>LinkedIn</h4>
-            <p>linkedin.com/in/tu-usuario</p>
-          </div>
+        <a href="https://linkedin.com/in/tu-usuario" target="_blank" class="card contact-link">
+          <div class="contact-icon">💼</div>
+          <div><h4>LinkedIn</h4><p>linkedin.com/in/tu-usuario</p></div>
         </a>
       </div>
 
-      <!-- COLUMNA DERECHA: FORM VISUAL -->
-      <form class="contact-form" onsubmit="event.preventDefault(); alert('¡Mensaje enviado (Simulación)!');">
+      <!-- COLUMNA DERECHA: formulario (simulado, no envía a un servidor real) -->
+      <form class="card contact-form reveal" id="contactForm">
         <div class="form-group">
           <label>Nombre</label>
-          <input type="text" placeholder="Tu nombre" required />
+          <input type="text" placeholder="Tu nombre completo" required />
         </div>
         <div class="form-group">
           <label>Email</label>
@@ -116,16 +125,41 @@
         </div>
         <div class="form-group">
           <label>Mensaje</label>
-          <textarea rows="4" placeholder="¿En qué puedo ayudarte?" required></textarea>
+          <textarea placeholder="¿En qué proyecto puedo colaborar contigo?" required></textarea>
         </div>
-        <button type="submit" class="btn-submit">Enviar Mensaje ➔</button>
+        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Enviar Mensaje →</button>
+        <div class="form-success" id="formSuccess">✓ Mensaje enviado correctamente. Te responderé pronto.</div>
       </form>
-    </div>
-  </main>
 
-  <footer>
-    <p>© 2026 Daniel Gómez | Ingeniería de Software</p>
-  </footer>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">Daniel<span>Gómez</span></span>
+  <span>© 2026 Daniel Sebastián Gómez · Ingeniería de Software</span>
+  <span>Quito, Ecuador</span>
+</footer>
+
+<script src="script.js"></script>
+
+<!-- ====================================================
+     SCRIPT PROPIO: simula el envío del formulario.
+     NOTA IMPORTANTE: este formulario NO envía correos reales.
+     Para que funcione de verdad necesitas conectarlo a un
+     servicio backend (ej: Formspree, EmailJS, o tu propio
+     servidor). Por ahora solo muestra un mensaje de éxito.
+     ==================================================== -->
+<script>
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    success.classList.add('show');
+    form.reset();
+    setTimeout(() => success.classList.remove('show'), 4000);
+  });
+</script>
 
 </body>
 </html>

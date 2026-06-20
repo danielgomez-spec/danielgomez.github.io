@@ -3,131 +3,199 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logros Académicos — Daniel Gómez</title>
+  <title>Logros — Daniel Gómez</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ====================================================
+       ESTILOS PROPIOS DE ESTA PÁGINA (logros.html)
+       ==================================================== -->
   <style>
-    :root {
-      --bg: #0a0d16;
-      --card-bg: rgba(18, 23, 35, 0.6);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #ffffff;
-      --text-muted: #94a3b8;
-      --accent-blue: #00f2fe;
-      --font: 'Space Grotesk', sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-      --nav-h: 70px;
+    .page-header { padding: 4rem 0 1rem; }
+
+    /* ── TIMELINE VERTICAL ──
+       Una línea vertical (::before) conecta puntos (.timeline-dot)
+       a la izquierda de cada item. */
+    .timeline { position: relative; padding-left: 2.5rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0.4rem; bottom: 0; width: 2px;
+      background: linear-gradient(180deg, var(--blue), var(--gold), transparent);
     }
+    .timeline-item {
+      position: relative; margin-bottom: 2.75rem;
+      padding: 1.75rem 2rem;
+    }
+    .timeline-dot {
+      position: absolute; left: -2.5rem; top: 1.9rem;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--blue);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 3px var(--blue-light);
+    }
+    .timeline-year {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--blue); letter-spacing: 1.5px; margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .timeline-item h4 { font-family: var(--font-display); font-size: 1.05rem; color: var(--navy); margin-bottom: 0.6rem; }
+    .timeline-item p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background-color: var(--bg); color: var(--text); min-height: 100vh; padding-top: var(--nav-h); }
-
-    /* NAV GLOBAL */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; background: rgba(10, 13, 22, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .nav-logo span { color: var(--accent-blue); }
-    .nav-links { display: flex; gap: 1.5rem; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent-blue); }
-
-    /* CONTENIDO */
-    .container { max-width: 1000px; margin: 4rem auto; padding: 0 2rem; }
-    .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; background: linear-gradient(135deg, #fff, var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    .section-title { font-size: 1.5rem; margin-bottom: 1.5rem; color: #fff; border-left: 3px solid var(--accent-blue); padding-left: 0.75rem; }
-
-    /* TABLA PROFESIONAL DE MATERIAS */
-    .table-container { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 4rem; backdrop-filter: blur(10px); }
+    /* ── TABLA DE MATERIAS ── */
+    .table-card { overflow: hidden; padding: 0; }
     table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { background: rgba(255,255,255,0.02); color: #fff; font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); }
-    td { padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.95rem; }
+    th {
+      background: var(--bg-soft); color: var(--navy);
+      font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase;
+      letter-spacing: 1px; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border);
+    }
+    td { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.92rem; }
     tr:last-child td { border-bottom: none; }
-    .badge-core { background: rgba(0, 242, 254, 0.1); color: var(--accent-blue); padding: 0.2rem 0.6rem; border-radius: 4px; font-family: var(--mono); font-size: 0.8rem; }
+    .badge-core {
+      background: var(--blue-light); color: var(--blue);
+      padding: 0.25rem 0.7rem; border-radius: 6px;
+      font-family: var(--font-mono); font-size: 0.78rem;
+    }
+    .status-ok { color: #1a9b5c; font-weight: 600; }
 
-    /* CERTIFICADOS CARD */
+    /* ── TARJETAS DE CERTIFICADOS ── */
     .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-    .cert-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: border-color 0.3s; }
-    .cert-card:hover { border-color: var(--accent-blue); }
-    .cert-date { font-family: var(--mono); font-size: 0.8rem; color: var(--accent-blue); margin-bottom: 0.5rem; }
-    .cert-card h4 { color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem; }
-    .cert-card p { color: var(--text-muted); font-size: 0.85rem; }
-
-    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; font-family: var(--mono); margin-top: 4rem; }
-    @media (max-width: 768px) { nav { padding: 0 1.5rem; } th, td { padding: 1rem; font-size: 0.85rem; } }
+    .cert-card { padding: 1.75rem; border-left: 3px solid var(--gold); }
+    .cert-date {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--gold); margin-bottom: 0.6rem; font-weight: 600;
+    }
+    .cert-card h4 { font-family: var(--font-display); color: var(--navy); font-size: 1rem; margin-bottom: 0.5rem; }
+    .cert-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a class="nav-logo" href="index.html">DG<span>//</span>dev</a>
-    <div class="nav-links">
-      <a href="index.html">Inicio</a>
-      <a href="sobre-mi.html">Sobre mí</a>
-      <a href="proyectos.html">Proyectos</a>
-      <a href="logros.html" class="active">Logros</a>
-      <a href="contacto.html">Contacto</a>
-    </div>
-  </nav>
+<div class="ambient-bg"></div>
 
-  <main class="container">
-    <h2 class="page-title">Historial Académico y Logros</h2>
-    
-    <!-- SECCIÓN ACADÉMICA -->
-    <h3 class="section-title">Materias Destacadas</h3>
-    <div class="table-container">
+<nav>
+  <a class="nav-logo" href="index.html">Daniel<span>Gómez</span></a>
+  <button class="nav-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-mi.html">Sobre mí</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="logros.html" class="active">Logros</a>
+    <a href="contacto.html" class="nav-cta">Contáctame</a>
+  </div>
+</nav>
+
+<section class="page-section page-header">
+  <div class="container">
+    <div class="section-label">Trayectoria</div>
+    <h1 class="section-title reveal">Logros <span class="accent">Académicos</span></h1>
+    <p class="section-subtitle reveal">Un resumen de mi historial académico, certificaciones externas y avances por periodo.</p>
+  </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section class="page-section">
+  <div class="container">
+    <h2 class="section-title reveal" style="font-size: 1.6rem;">Línea de <span class="accent">Tiempo</span></h2>
+
+    <div class="timeline">
+      <div class="card timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2026 — Lenguajes de Programación</div>
+        <h4>Laravel Full-Stack · Relaciones ManyToMany · Middleware Auth</h4>
+        <p>Implementación completa de sistema web con autenticación, relaciones de base de datos complejas y protección de rutas mediante middleware.</p>
+      </div>
+      <div class="card timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2026 — Lenguajes de Programación</div>
+        <h4>Motor NLP & Procesamiento de Listas Recursivas en Prolog</h4>
+        <p>Sistema experto con backtracking, recursión avanzada y generación de texto natural. Paradigma lógico declarativo aplicado.</p>
+      </div>
+      <div class="card timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025 — Certificación</div>
+        <h4>Advanced Software Logic</h4>
+        <p>Validación de competencias en lógica algorítmica compleja y control de flujos de código.</p>
+      </div>
+      <div class="card timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025 — Certificación</div>
+        <h4>Git & Collaborative Workflows</h4>
+        <p>Estrategias avanzadas de branching, merge y gestión limpia de versiones en equipos de desarrollo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── MATERIAS DESTACADAS ── -->
+<section class="page-section soft">
+  <div class="container">
+    <h2 class="section-title reveal" style="font-size: 1.6rem;">Materias <span class="accent">Destacadas</span></h2>
+
+    <div class="card table-card reveal">
       <table>
         <thead>
-          <tr>
-            <th>Asignatura</th>
-            <th>Área de Enfoque</th>
-            <th>Estatus</th>
-          </tr>
+          <tr><th>Asignatura</th><th>Área de Enfoque</th><th>Estatus</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Estructuras de Datos</strong></td>
+            <td><strong style="color:var(--navy)">Estructuras de Datos</strong></td>
             <td><span class="badge-core">Algoritmia / Lógica</span></td>
-            <td>Aprobada</td>
+            <td><span class="status-ok">✓ Aprobada</span></td>
           </tr>
           <tr>
-            <td><strong>Programación Orientada a Objetos</strong></td>
+            <td><strong style="color:var(--navy)">Programación Orientada a Objetos</strong></td>
             <td><span class="badge-core">Arquitectura de Software</span></td>
-            <td>Aprobada</td>
+            <td><span class="status-ok">✓ Aprobada</span></td>
           </tr>
           <tr>
-            <td><strong>Bases de Datos Relacionales</strong></td>
+            <td><strong style="color:var(--navy)">Bases de Datos Relacionales</strong></td>
             <td><span class="badge-core">Infraestructura de Datos</span></td>
-            <td>Aprobada</td>
+            <td><span class="status-ok">✓ Aprobada</span></td>
           </tr>
           <tr>
-            <td><strong>Teoría de Compiladores / Lenguajes</strong></td>
+            <td><strong style="color:var(--navy)">Teoría de Compiladores / Lenguajes</strong></td>
             <td><span class="badge-core">Lógica de Autómatas</span></td>
-            <td>Aprobada</td>
+            <td><span class="status-ok">✓ Aprobada</span></td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
+</section>
 
-    <!-- SECCIÓN CERTIFICADOS -->
-    <h3 class="section-title">Certificaciones Externas</h3>
+<div class="divider"></div>
+
+<!-- ── CERTIFICACIONES ── -->
+<section class="page-section">
+  <div class="container">
+    <h2 class="section-title reveal" style="font-size: 1.6rem;">Certificaciones <span class="accent">Externas</span></h2>
+
     <div class="cert-grid">
-      <div class="cert-card">
+      <div class="card cert-card reveal">
         <div class="cert-date">2025</div>
         <h4>Advanced Software Logic</h4>
         <p>Validación de competencias de lógica algorítmica compleja y control de flujos de código.</p>
       </div>
-      <div class="cert-card">
+      <div class="card cert-card reveal">
         <div class="cert-date">2025</div>
         <h4>Git & Collaborative Workflows</h4>
         <p>Estrategias avanzadas de branching, merge y gestión limpia de versiones de código en equipos.</p>
       </div>
     </div>
-  </main>
+  </div>
+</section>
 
-  <footer>
-    <p>© 2026 Daniel Gómez | Ingeniería de Software</p>
-  </footer>
+<footer>
+  <span class="footer-logo">Daniel<span>Gómez</span></span>
+  <span>© 2026 Daniel Sebastián Gómez · Ingeniería de Software</span>
+  <span>Quito, Ecuador</span>
+</footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>

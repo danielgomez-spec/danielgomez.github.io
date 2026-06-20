@@ -1,0 +1,302 @@
+/* ============================================================
+   HOJA DE ESTILOS COMPARTIDA — Portafolio Daniel Gómez
+   ============================================================
+   Este archivo se usa en TODAS las páginas (index, sobre-mi,
+   proyectos, logros, contacto) para que el diseño sea consistente.
+
+   Si quieres cambiar un color, una fuente o un tamaño en TODO
+   el sitio a la vez, hazlo aquí. Si quieres cambiar algo en
+   UNA sola página, hazlo en el <style> de esa página.
+   ============================================================ */
+
+/* ── 1. VARIABLES DE COLOR Y TIPOGRAFÍA ──────────────────────
+   Estas son las "piezas de lego" del diseño. Cambia un valor
+   aquí y se actualiza en todo el sitio automáticamente. */
+:root {
+  /* Colores de fondo */
+  --bg: #ffffff;              /* Fondo principal (blanco) */
+  --bg-soft: #f7f9fc;         /* Fondo de secciones alternas (gris muy claro) */
+  --bg-card: #ffffff;         /* Fondo de tarjetas */
+
+  /* Colores de marca */
+  --navy: #0a2540;            /* Azul marino oscuro — texto principal / nav */
+  --blue: #1e6fd9;            /* Azul brillante — acento principal, links, botones */
+  --blue-light: #eaf2fd;      /* Azul muy claro — fondos suaves de hover */
+  --gold: #c9a449;            /* Dorado — acento premium, detalles, líneas */
+  --gold-light: #f7efdc;      /* Dorado muy claro — fondos suaves */
+
+  /* Colores de texto */
+  --text: #1a1f2e;            /* Texto principal (casi negro) */
+  --text-muted: #5b6577;      /* Texto secundario (gris) */
+  --text-light: #94a0b3;      /* Texto terciario (gris claro) */
+
+  /* Bordes y sombras */
+  --border: #e6eaf0;          /* Borde sutil para tarjetas */
+  --shadow: 0 4px 24px rgba(10, 37, 64, 0.06);
+  --shadow-hover: 0 12px 40px rgba(10, 37, 64, 0.12);
+
+  /* Tipografía: Plus Jakarta Sans = títulos (look moderno tipo Wix) 
+     Inter = cuerpo de texto (alta legibilidad) */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace; /* Para etiquetas técnicas */
+
+  --nav-h: 76px; /* Alto de la barra de navegación, usado para el padding-top del body */
+}
+
+/* ── 2. RESET BÁSICO ─────────────────────────────────────────
+   Quita los márgenes/paddings por defecto del navegador para
+   tener control total del espaciado. */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  padding-top: var(--nav-h); /* Deja espacio para el nav fijo */
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* ── 3. FONDO ANIMADO SUTIL ───────────────────────────────────
+   Capa decorativa con manchas de color en movimiento muy lento.
+   Es puramente visual y no afecta el contenido (pointer-events: none).
+   Para apagar la animación, comenta la línea "animation:" abajo. */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 40% at 15% 20%, rgba(30,111,217,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 85% 60%, rgba(201,164,73,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 35% at 50% 90%, rgba(30,111,217,0.04) 0%, transparent 70%);
+  background-size: 200% 200%;
+  animation: ambientMove 25s ease-in-out infinite; /* Movimiento lento, no distrae */
+}
+@keyframes ambientMove {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+
+/* ── 4. BARRA DE NAVEGACIÓN ───────────────────────────────────
+   IMPORTANTE: los enlaces aquí son <a href="archivo.html">,
+   es decir, NAVEGAN a otra página real (no usan #ancla).
+   Por eso cada página HTML necesita su propio <nav> con la
+   clase "active" puesta en el link correspondiente. */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 4rem;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--navy);
+  letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--gold); } /* La parte dorada del logo "DG.dev" */
+
+.nav-links { display: flex; align-items: center; gap: 2.5rem; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  position: relative;
+  padding: 0.4rem 0;
+  transition: color 0.25s ease;
+}
+/* Línea inferior animada al hacer hover/activo */
+.nav-links a::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -4px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-links a:hover { color: var(--navy); }
+.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+.nav-links a.active { color: var(--navy); }
+
+/* Botón CTA opcional en el nav (ej: "Contáctame") */
+.nav-cta {
+  background: linear-gradient(135deg, var(--blue), #1557ad);
+  color: #fff !important;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+}
+.nav-cta::after { display: none; } /* No queremos la línea inferior en el botón */
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(30,111,217,0.3); }
+
+/* Menú hamburguesa para móvil (oculto en desktop) */
+.nav-toggle { display: none; }
+
+/* ── 5. ETIQUETAS DE SECCIÓN (eyebrow + título) ───────────────
+   Patrón reutilizado en cada página: una etiqueta pequeña con
+   línea dorada + título grande con una palabra acentuada. */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--blue);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.section-label::before { content: ''; width: 28px; height: 2px; background: var(--gold); }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 1.5rem;
+}
+.section-title .accent { color: var(--blue); } /* Palabra resaltada dentro de un título */
+.section-title .accent-gold { color: var(--gold); }
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+/* ── 6. CONTENEDORES GENERALES ────────────────────────────────
+   .page-section = espacio estándar entre secciones de una página
+   .container    = ancho máximo centrado, usado dentro de cada sección */
+.page-section { padding: 6rem 0; position: relative; }
+.page-section.soft { background: var(--bg-soft); } /* Para alternar fondo blanco/gris */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+
+/* ── 7. TARJETAS GENÉRICAS (reutilizadas en varias páginas) ──── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(30,111,217,0.25);
+}
+
+/* ── 8. BOTONES ────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: linear-gradient(135deg, var(--blue), #1557ad);
+  color: #fff; text-decoration: none;
+  padding: 1rem 2.2rem; border-radius: 50px;
+  font-weight: 700; font-size: 0.95rem;
+  box-shadow: 0 6px 20px rgba(30,111,217,0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none; cursor: pointer; font-family: var(--font-body);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(30,111,217,0.35); }
+
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: linear-gradient(135deg, var(--gold), #b08f3a);
+  color: #fff; text-decoration: none;
+  padding: 1rem 2.2rem; border-radius: 50px;
+  font-weight: 700; font-size: 0.95rem;
+  box-shadow: 0 6px 20px rgba(201,164,73,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none; cursor: pointer; font-family: var(--font-body);
+}
+.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(201,164,73,0.4); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  border: 1.5px solid var(--navy);
+  color: var(--navy); text-decoration: none;
+  padding: 1rem 2.2rem; border-radius: 50px;
+  font-weight: 700; font-size: 0.95rem;
+  transition: all 0.3s ease; background: transparent;
+}
+.btn-outline:hover { background: var(--navy); color: #fff; transform: translateY(-3px); }
+
+/* ── 9. ANIMACIÓN DE ENTRADA AL HACER SCROLL ──────────────────
+   Cualquier elemento con clase "reveal" empieza invisible y
+   desplazado hacia abajo. El JS (al final de cada página) le
+   agrega la clase "visible" cuando entra en pantalla. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Divisor decorativo entre secciones */
+.divider {
+  height: 1px;
+  max-width: 1280px; margin: 0 auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+
+/* ── 10. FOOTER GLOBAL ─────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.7);
+  padding: 3rem 4rem;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 0.85rem;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo { font-family: var(--font-display); font-weight: 800; color: #fff; }
+.footer-logo span { color: var(--gold); }
+
+/* ── 11. RESPONSIVE: TABLET Y MÓVIL ───────────────────────────
+   Por debajo de 900px de ancho, escondemos el menú de texto y
+   mostramos el botón hamburguesa (la lógica de abrir/cerrar
+   está en el JS de cada página). */
+@media (max-width: 900px) {
+  nav { padding: 0 1.5rem; }
+  .nav-links {
+    position: fixed; top: var(--nav-h); left: 0; right: 0;
+    background: #fff;
+    flex-direction: column; align-items: flex-start;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-150%);
+    transition: transform 0.35s ease;
+    gap: 1.25rem;
+  }
+  .nav-links.open { transform: translateY(0); }
+  .nav-toggle {
+    display: flex; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 0.5rem;
+  }
+  .nav-toggle span { width: 24px; height: 2px; background: var(--navy); border-radius: 2px; }
+
+  .container { padding: 0 1.5rem; }
+  .page-section { padding: 4rem 0; }
+  footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+}
+
+/* Respeta la preferencia de "reducir movimiento" del usuario */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

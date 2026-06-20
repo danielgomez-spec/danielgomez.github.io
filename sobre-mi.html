@@ -3,99 +3,213 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sobre Mí — Sebastian Gómez</title>
+  <title>Sobre Mí — Daniel Gómez</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ====================================================
+       ESTILOS PROPIOS DE ESTA PÁGINA (sobre-mi.html)
+       ==================================================== -->
   <style>
-    :root {
-      --bg: #0a0d16;
-      --card-bg: rgba(18, 23, 35, 0.6);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #ffffff;
-      --text-muted: #94a3b8;
-      --accent-blue: #00f2fe;
-      --accent-purple: #7f00ff;
-      --font: 'Space Grotesk', sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-      --nav-h: 70px;
+    .page-header { padding: 4rem 0 1rem; }
+
+    /* Grid principal: texto biográfico + tarjeta de descarga de CV */
+    .about-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem;
+      align-items: start;
+    }
+    .about-text { padding: 2.5rem; }
+    .about-text p {
+      color: var(--text-muted); line-height: 1.85;
+      margin-bottom: 1.25rem; font-size: 1.02rem;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background-color: var(--bg); color: var(--text); min-height: 100vh; padding-top: var(--nav-h); }
+    /* Lista de competencias con barra de progreso */
+    .competencies { margin-top: 2.5rem; }
+    .competencies h3 {
+      font-family: var(--font-display); color: var(--navy);
+      font-size: 1.1rem; margin-bottom: 1.5rem;
+    }
+    .comp-row { margin-bottom: 1.25rem; }
+    .comp-row-top { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+    .comp-row-top span:first-child { font-weight: 600; color: var(--navy); font-size: 0.92rem; }
+    .comp-row-top span:last-child { color: var(--text-light); font-size: 0.85rem; font-family: var(--font-mono); }
+    .comp-bar-bg { height: 6px; background: var(--bg-soft); border-radius: 4px; overflow: hidden; }
+    .comp-bar-fill {
+      height: 100%; border-radius: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      width: 0%; /* el JS anima esto hasta --target */
+      transition: width 1.2s cubic-bezier(0.23,1,0.32,1);
+    }
 
-    /* NAV GLOBAL */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; background: rgba(10, 13, 22, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .nav-logo span { color: var(--accent-blue); }
-    .nav-links { display: flex; gap: 1.5rem; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent-blue); }
+    /* Tarjeta CV: fondo con degradado sutil azul/dorado */
+    .cv-card {
+      padding: 2.5rem;
+      text-align: center;
+      background: linear-gradient(160deg, var(--blue-light), var(--gold-light));
+      border: 1px solid var(--border);
+    }
+    .cv-card .icon-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin: 0 auto 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .cv-card h3 { font-family: var(--font-display); color: var(--navy); font-size: 1.2rem; margin-bottom: 0.75rem; }
+    .cv-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.75rem; line-height: 1.6; }
 
-    /* CONTENIDO */
-    .container { max-width: 1000px; margin: 4rem auto; padding: 0 2rem; }
-    .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; background: linear-gradient(135deg, #fff, var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
-    .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem; }
-    .about-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem; backdrop-filter: blur(10px); }
-    .about-card p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem; }
-    
-    .skills-section h3 { font-size: 1.3rem; margin-bottom: 1rem; color: #fff; }
-    .skills-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .skill-tag { background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 50px; font-family: var(--mono); font-size: 0.85rem; color: var(--accent-blue); }
-    
-    .cv-box { background: linear-gradient(135deg, rgba(0, 242, 254, 0.05), rgba(127, 0, 255, 0.05)); border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 24px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-    .cv-box h3 { margin-bottom: 1rem; font-size: 1.4rem; }
-    .cv-box p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
-    
-    .btn-download { background: #fff; color: var(--bg); text-decoration: none; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; transition: transform 0.3s; }
-    .btn-download:hover { transform: translateY(-2px); }
+    /* Tabla de valores/principios de trabajo */
+    .values-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .value-card { padding: 2rem; }
+    .value-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .value-card h4 { font-family: var(--font-display); color: var(--navy); font-size: 1rem; margin-bottom: 0.6rem; }
+    .value-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.65; }
 
-    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; font-family: var(--mono); margin-top: 4rem; }
-    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } nav { padding: 0 1.5rem; } }
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a class="nav-logo" href="index.html">DG<span>//</span>dev</a>
-    <div class="nav-links">
-      <a href="index.html">Inicio</a>
-      <a href="sobre-mi.html" class="active">Sobre mí</a>
-      <a href="proyectos.html">Proyectos</a>
-      <a href="logros.html">Logros</a>
-      <a href="contacto.html">Contacto</a>
-    </div>
-  </nav>
+<div class="ambient-bg"></div>
 
-  <main class="container">
-    <h2 class="page-title">Sobre Mí</h2>
+<nav>
+  <a class="nav-logo" href="index.html">Daniel<span>Gómez</span></a>
+  <button class="nav-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-mi.html" class="active">Sobre mí</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="logros.html">Logros</a>
+    <a href="contacto.html" class="nav-cta">Contáctame</a>
+  </div>
+</nav>
+
+<section class="page-section page-header">
+  <div class="container">
+    <div class="section-label">Perfil</div>
+    <h1 class="section-title reveal">Sobre <span class="accent">Mí</span></h1>
+    <p class="section-subtitle reveal">Conoce mi trayectoria, mis competencias técnicas y lo que me motiva como ingeniero de software.</p>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="container">
     <div class="about-grid">
-      <div class="about-card">
-        <p>Soy un estudiante apasionado de Ingeniería en Ciencias de la computación, enfocado en el desarrollo de sistemas limpios, lógicos y altamente eficientes.</p>
-        <p>Mi trayectoria se ha centrado en dominar la resolución de problemas lógicos complejos a través de lenguajes de bajo y alto nivel, construyendo desde intérpretes de código y herramientas de análisis técnico hasta dinámicas interactivas orientadas a la web.</p>
-        <div class="skills-section" style="margin-top: 2rem;">
-          <h3>Core Competencies</h3>
-          <div class="skills-grid">
-            <span class="skill-tag">Programación Estructurada</span>
-            <span class="skill-tag">POO</span>
-            <span class="skill-tag">Estructuras de Datos</span>
-            <span class="skill-tag">Lógica de Estados</span>
-            <span class="skill-tag">Arquitectura Limpia</span>
+
+      <!-- COLUMNA IZQUIERDA: biografía + competencias -->
+      <div class="card about-text reveal">
+        <p>
+          Soy estudiante de Ingeniería en Ciencias de la Computación, enfocado
+          en el desarrollo de sistemas limpios, lógicos y altamente eficientes.
+        </p>
+        <p>
+          Mi trayectoria se ha centrado en dominar la resolución de problemas
+          lógicos complejos a través de lenguajes de bajo y alto nivel,
+          construyendo desde intérpretes de código y herramientas de análisis
+          técnico hasta dinámicas interactivas orientadas a la web.
+        </p>
+        <p>
+          Me interesa especialmente la arquitectura limpia de software y el
+          control de versiones como práctica profesional, aplicando
+          estándares de la industria desde mis proyectos académicos.
+        </p>
+
+        <div class="competencies">
+          <h3>Competencias Principales</h3>
+
+          <!-- Cada barra usa --target en línea (CSS variable) y data-target
+               para que el JS sepa hasta qué % animar -->
+          <div class="comp-row">
+            <div class="comp-row-top"><span>Programación Estructurada</span><span>90%</span></div>
+            <div class="comp-bar-bg"><div class="comp-bar-fill" data-target="90"></div></div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-row-top"><span>Programación Orientada a Objetos</span><span>85%</span></div>
+            <div class="comp-bar-bg"><div class="comp-bar-fill" data-target="85"></div></div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-row-top"><span>Estructuras de Datos</span><span>82%</span></div>
+            <div class="comp-bar-bg"><div class="comp-bar-fill" data-target="82"></div></div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-row-top"><span>Arquitectura Limpia</span><span>78%</span></div>
+            <div class="comp-bar-bg"><div class="comp-bar-fill" data-target="78"></div></div>
           </div>
         </div>
       </div>
-      <div class="cv-box">
-        <h3>¿Buscas un perfil técnico calificado?</h3>
-        <p>Puedes descargar mi historial completo, enfoque académico y experiencia técnica resumida en formato PDF.</p>
-        <a href="Tu-CV.pdf" target="_blank" class="btn-download">Descargar CV ↓</a>
+
+      <!-- COLUMNA DERECHA: descarga de CV -->
+      <div class="card cv-card reveal">
+        <div class="icon-circle">📄</div>
+        <h3>¿Buscas un perfil técnico?</h3>
+        <p>Descarga mi historial completo, enfoque académico y experiencia técnica resumida en formato PDF.</p>
+        <a href="Tu-CV.pdf" target="_blank" class="btn-primary">Descargar CV ↓</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VALORES / PRINCIPIOS DE TRABAJO -->
+<section class="page-section soft">
+  <div class="container">
+    <div class="section-label">Filosofía</div>
+    <h2 class="section-title reveal">Cómo <span class="accent">Trabajo</span></h2>
+
+    <div class="values-grid">
+      <div class="card value-card reveal">
+        <div class="value-icon">🧩</div>
+        <h4>Código Autodocumentado</h4>
+        <p>Priorizo nombres claros de variables y funciones antes que comentarios excesivos. El código debe explicarse por sí mismo.</p>
+      </div>
+      <div class="card value-card reveal">
+        <div class="value-icon">🔍</div>
+        <h4>Atención al Detalle</h4>
+        <p>Cada decisión de diseño tiene un porqué documentado, especialmente en lógica algorítmica no intuitiva.</p>
+      </div>
+      <div class="card value-card reveal">
+        <div class="value-icon">🤝</div>
+        <h4>Control de Versiones Profesional</h4>
+        <p>Commits atómicos, mensajes descriptivos y ramas limpias, siguiendo estándares reales de la industria.</p>
       </div>
     </div>
-  </main>
+  </div>
+</section>
 
-  <footer>
-    <p>© 2026 Sebastian Gómez | Ingeniería en Ciencias de la computación</p>
-  </footer>
+<footer>
+  <span class="footer-logo">Daniel<span>Gómez</span></span>
+  <span>© 2026 Daniel Sebastián Gómez · Ingeniería de Software</span>
+  <span>Quito, Ecuador</span>
+</footer>
+
+<script src="script.js"></script>
+
+<!-- ====================================================
+     SCRIPT PROPIO: anima las barras de competencias hasta
+     su valor data-target cuando entran en pantalla.
+     ==================================================== -->
+<script>
+  const bars = document.querySelectorAll('.comp-bar-fill');
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bar = entry.target;
+        bar.style.width = bar.dataset.target + '%';
+        barObserver.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.4 });
+  bars.forEach(bar => barObserver.observe(bar));
+</script>
 
 </body>
 </html>
