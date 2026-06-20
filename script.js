@@ -176,8 +176,23 @@ document.addEventListener('DOMContentLoaded', () => {
      este bloque no hace nada (no rompe el sitio). */
   const curtain = document.getElementById('page-transition');
   if (curtain) {
-    // Retira la cortina apenas la página termina de cargar
-    requestAnimationFrame(() => curtain.classList.add('leaving'));
+    // BUG CORREGIDO: un solo requestAnimationFrame a veces se funde con el
+    // primer "paint" del navegador y la animación CSS nunca se dispara
+    // (la cortina se queda pegada cubriendo la pantalla). La solución es
+    // un DOBLE requestAnimationFrame: el primero espera a que el navegador
+    // pinte el estado inicial (cortina cubriendo todo), el segundo recién
+    // agrega la clase que dispara la animación de salida.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => curtain.classList.add('leaving'));
+    });
+
+    // Red de seguridad: si por lo que sea la animación no corre (navegador
+    // raro, error de CSS, etc.), forzamos que la cortina se oculte sola
+    // pasado un segundo para que el sitio nunca se quede tapado.
+    setTimeout(() => {
+      curtain.style.transform = 'translateY(-100%)';
+      curtain.style.transition = 'transform 0.4s ease';
+    }, 1000);
 
     // Intercepta clics en links internos del sitio para animar la salida
     document.querySelectorAll('a[href$=".html"]').forEach(link => {
