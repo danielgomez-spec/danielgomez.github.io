@@ -156,8 +156,13 @@
 </head>
 <body>
 
-<!-- Capa de fondo decorativa animada (definida en style.css) -->
+<!-- Cortina de transición entre páginas (ver style.css sección 11 y script.js sección 5) -->
+<div id="page-transition"><span class="transition-mark">DG</span></div>
+
+<!-- Capa de fondo decorativa: mesh de color animado -->
 <div class="ambient-bg"></div>
+<!-- Capa de fondo decorativa: partículas conectadas (dibujadas por JS) -->
+<canvas id="bg-canvas"></canvas>
 
 <!-- ============================================================
      BARRA DE NAVEGACIÓN

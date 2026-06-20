@@ -35,6 +35,15 @@
   --shadow: 0 4px 24px rgba(10, 37, 64, 0.06);
   --shadow-hover: 0 12px 40px rgba(10, 37, 64, 0.12);
 
+  /* Colores SOLO para el fondo animado (más saturados que los de marca,
+     porque se usan en manchas grandes y difuminadas, no en texto).
+     Si quieres que el fondo se vea más o menos intenso, ajusta el
+     valor "alpha" (el número después de la coma final en rgba) en
+     la sección "FONDO ANIMADO" más abajo, no estos hex. */
+  --bg-fx-blue: #2f7ff0;
+  --bg-fx-gold: #d8ad4d;
+  --bg-fx-violet: #6c5ce7;
+
   /* Tipografía: Plus Jakarta Sans = títulos (look moderno tipo Wix) 
      Inter = cuerpo de texto (alta legibilidad) */
   --font-display: 'Plus Jakarta Sans', sans-serif;
@@ -59,25 +68,47 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 
-/* ── 3. FONDO ANIMADO SUTIL ───────────────────────────────────
-   Capa decorativa con manchas de color en movimiento muy lento.
-   Es puramente visual y no afecta el contenido (pointer-events: none).
-   Para apagar la animación, comenta la línea "animation:" abajo. */
+/* ── 3. FONDO ANIMADO ──────────────────────────────────────────
+   Dos capas trabajando juntas para dar vida al fondo blanco:
+
+   A) .ambient-bg → un "mesh" de 4 manchas de color grandes y
+      difuminadas (radial-gradient) que se mueven lentamente en
+      bucle. Es la capa de color.
+
+   B) #bg-canvas → partículas finas conectadas por líneas que
+      flotan y reaccionan levemente al mouse. Es la capa de
+      textura/profundidad, dibujada con JavaScript (ver script.js).
+
+   Ambas son decorativas (pointer-events: none) y van DETRÁS de
+   todo el contenido (z-index: -2 y -1). Para bajar la intensidad
+   del color, reduce los valores "alpha" (el último número en cada
+   rgba). Para apagar el movimiento, comenta la línea "animation". */
 .ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 12% 18%, rgba(47,127,240,0.16) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 45% at 88% 15%, rgba(216,173,77,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 45% at 85% 85%, rgba(108,92,231,0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 10% 90%, rgba(47,127,240,0.12) 0%, transparent 70%);
+  background-size: 180% 180%;
+  animation: ambientMove 18s ease-in-out infinite alternate;
+}
+@keyframes ambientMove {
+  0%   { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%; }
+  50%  { background-position: 30% 40%, 70% 30%, 70% 70%, 30% 60%; }
+  100% { background-position: 60% 10%, 40% 60%, 50% 40%, 60% 90%; }
+}
+
+/* Canvas de partículas: ocupa toda la pantalla, fijo, detrás del
+   contenido pero ENCIMA del mesh de color (z-index -1 vs -2). */
+#bg-canvas {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 50% 40% at 15% 20%, rgba(30,111,217,0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 45% 40% at 85% 60%, rgba(201,164,73,0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 35% at 50% 90%, rgba(30,111,217,0.04) 0%, transparent 70%);
-  background-size: 200% 200%;
-  animation: ambientMove 25s ease-in-out infinite; /* Movimiento lento, no distrae */
-}
-@keyframes ambientMove {
-  0%, 100% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
 }
 
 /* ── 4. BARRA DE NAVEGACIÓN ───────────────────────────────────
@@ -268,7 +299,52 @@ footer {
 .footer-logo { font-family: var(--font-display); font-weight: 800; color: #fff; }
 .footer-logo span { color: var(--gold); }
 
-/* ── 11. RESPONSIVE: TABLET Y MÓVIL ───────────────────────────
+/* ── 11. TRANSICIÓN ENTRE PÁGINAS ──────────────────────────────
+   Una "cortina" de color (#page-transition) cubre toda la pantalla
+   antes de cambiar de página y se retira con una animación al
+   cargar la nueva. Esto refuerza visualmente que las 5 páginas
+   están conectadas, en vez de sentirse como saltos secos.
+
+   Cómo funciona (la lógica vive en script.js):
+   1) Al cargar cualquier página, la cortina empieza visible y
+      se desliza hacia afuera (clase "leaving").
+   2) Al hacer clic en un link interno, la cortina vuelve a
+      cubrir la pantalla (clase "entering") y SOLO ENTONCES
+      se navega de verdad a la siguiente página. */
+#page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: linear-gradient(120deg, var(--navy) 0%, var(--blue) 55%, var(--gold) 100%);
+  transform: translateY(0);
+  display: flex; align-items: center; justify-content: center;
+}
+/* Estado inicial al cargar: se retira hacia arriba revelando la página */
+#page-transition.leaving {
+  animation: curtainLeave 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+/* Estado al hacer clic en un link: cubre la pantalla hacia arriba */
+#page-transition.entering {
+  pointer-events: all;
+  animation: curtainEnter 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes curtainLeave {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+@keyframes curtainEnter {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+/* Pequeño logo/monograma centrado dentro de la cortina mientras transiciona */
+.transition-mark {
+  font-family: var(--font-display);
+  font-weight: 800; font-size: 1.4rem; color: #fff;
+  opacity: 0.9; letter-spacing: 1px;
+}
+
+/* ── 12. RESPONSIVE: TABLET Y MÓVIL ───────────────────────────
    Por debajo de 900px de ancho, escondemos el menú de texto y
    mostramos el botón hamburguesa (la lógica de abrir/cerrar
    está en el JS de cada página). */
