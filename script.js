@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(29,205,254,0.45)'; // cian de marca, semitransparente
+        ctx.fillStyle = 'rgba(29,205,254,0.55)'; // cian de marca, semitransparente
         ctx.fill();
       });
 
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(52,245,197,${(1 - dist / MAX_DIST) * 0.28})`; // menta, se desvanece con la distancia
+            ctx.strokeStyle = `rgba(52,245,197,${(1 - dist / MAX_DIST) * 0.35})`; // menta, se desvanece con la distancia
             ctx.lineWidth = 0.7;
             ctx.stroke();
           }
