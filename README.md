@@ -1,32 +1,81 @@
-# 📚 Lenguajes de Programación - Portafolio de Proyectos
+# 💼 Portafolio — Sebastián Gómez
 
-**Materia:** Lenguajes de Programación | **Periodo:** 2026-1 | **Estado:** En Desarrollo
-**Estudiante:** Sebastian Gómez
+Sitio web personal construido desde cero para mostrar mi trayectoria como estudiante de Ingeniería en Ciencias de la Computación: proyectos, logros académicos y forma de trabajo.
 
+🔗 **Sitio en vivo:** [danielgomez-spec.github.io](https://danielgomez-spec.github.io)
 
-## 🚀 Índice de Talleres y Proyectos
-A continuación se listan los repositorios independientes correspondientes a cada avance práctico de la materia:
-
-* **[Taller 2 - Sintaxis y Consultas Básicas en Prolog](https://github.com/danielgomez-spec/taller2-prolog)** *Descripción:* Hechos básicos, reglas iniciales y unificación sobre bases de conocimiento lógicas.
-* **[Taller 3 - Reglas de Inferencia Complejas](https://github.com/danielgomez-spec/taller3-prolog)** *Descripción:* Modelado de condiciones lógicas y toma de decisiones mediante motores declarativos.
-* **[Taller 4 - Motor NLP y Procesamiento de Listas Recursivas](https://github.com/danielgomez-spec/taller4-prolog)** *Descripción:* Sistema experto interactivo que procesa inventarios, calcula estadísticas con recursión y genera texto conjugado mediante backtracking.
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 
 ---
 
-## 🛠️ Especificaciones Técnicas Globales
+## 📖 Descripción
 
-### Tecnologías Utilizadas
-* **Lenguaje:** Prolog (Paradigma Lógico)
-* **Compilador/Entorno:** SWI-Prolog v10.0.2
-* **Editor:** Visual Studio Code con extensión Prolog
+Portafolio de 5 páginas construido **sin frameworks**, usando HTML, CSS y JavaScript puro. El objetivo fue practicar fundamentos sólidos de frontend — animaciones, arquitectura de archivos compartidos y experiencia de usuario — sin depender de librerías externas para la lógica de interfaz.
 
-### Requisitos de Ejecución General
-Para correr cualquiera de los talleres listados en tu máquina local, sigue estos comandos en tu consola:
+## 📸 Capturas de pantalla
+
+> Agrega aquí 1-2 imágenes del sitio (Home y Proyectos funcionan bien). Puedes arrastrarlas directamente al editor de README en GitHub, o subirlas a una carpeta `screenshots/` y referenciarlas así:
+>
+> ```markdown
+> ![Home](screenshots/home.png)
+> ![Proyectos](screenshots/proyectos.png)
+> ```
+
+## ✨ Características
+
+- **Diseño responsive** con CSS Grid y Flexbox, sin frameworks de UI
+- **Scroll reveal** con `IntersectionObserver` — los elementos aparecen al hacer scroll
+- **Contadores animados** en estadísticas (`data-count`)
+- **Fondo de partículas conectadas** dibujado en `<canvas>`, con leve interacción al mover el mouse
+- **Transición de "cortina"** entre páginas para que la navegación se sienta continua, no como recargas secas
+- **Filtrado de proyectos por categoría** (Web, Lógica/Compiladores, Prolog) en JavaScript puro
+- **Efecto "máquina de escribir"** en el rol profesional del Home
+- **Barras de competencias animadas** en la sección Sobre Mí
+- **Formulario de contacto** con validación HTML5 (simulado — ver nota abajo)
+
+## 🛠️ Stack tecnológico
+
+| Tecnología | Uso |
+|---|---|
+| HTML5 | Estructura semántica de las 5 páginas |
+| CSS3 | Variables CSS, Grid, Flexbox, animaciones y `@keyframes` |
+| JavaScript (ES6) | Interactividad, observers, canvas, lógica de filtros |
+| Google Fonts | Plus Jakarta Sans, Inter, JetBrains Mono |
+
+## 📁 Estructura del proyecto
+
+```
+portafolio/
+├── index.html          # Home — hero, stack, stats, preview de proyectos
+├── sobre-mi.html        # Biografía, competencias, filosofía de trabajo
+├── proyectos.html       # Grid de proyectos con filtro por categoría
+├── logros.html          # Timeline académico, materias y certificaciones
+├── contacto.html        # Formulario de contacto y redes sociales
+├── style.css            # Estilos globales compartidos
+└── script.js            # Lógica compartida: menú, scroll reveal, canvas, transiciones
+```
+
+## 🚀 Cómo verlo localmente
+
 ```bash
-# 1. Instalar SWI-Prolog desde la página oficial
-# 2. Clonar el repositorio específico del taller (Ejemplo Taller 4):
-git clone [https://github.com/danielgomez-spec/taller4-prolog.git](https://github.com/danielgomez-spec/taller4-prolog.git)
-cd taller4-prolog
+git clone https://github.com/danielgomez-spec/danielgomez-spec.github.io.git
+cd danielgomez-spec.github.io
+```
 
-# 3. Iniciar el entorno interactivo con el archivo del taller:
-swipl -s Taller4.pl
+Luego simplemente abre `index.html` en tu navegador, o usa la extensión **Live Server** de VS Code para recarga automática.
+
+## ⚠️ Nota sobre el formulario de contacto
+
+El formulario en `contacto.html` actualmente **no envía correos reales** — solo simula el envío mostrando un mensaje de confirmación. Para conectarlo a un backend real se puede usar un servicio como [Formspree](https://formspree.io) o [EmailJS](https://www.emailjs.com/).
+
+## 📬 Contacto
+
+- **Email:** daniel.gomez@ejemplo.com
+- **GitHub:** [@danielgomez-spec](https://github.com/danielgomez-spec)
+- **LinkedIn:** [linkedin.com/in/tu-usuario](https://linkedin.com/in/tu-usuario)
+
+---
+
+© 2026 Sebastián Gómez · Guayaquil, Ecuador
